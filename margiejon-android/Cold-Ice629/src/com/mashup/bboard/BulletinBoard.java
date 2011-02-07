@@ -49,7 +49,6 @@ public class BulletinBoard extends Activity implements OnItemClickListener {
             }
           });
         
-        
         HttpClient httpClient = new DefaultHttpClient();
 		HttpGet getMethod = new HttpGet("http://cold-ice-629.heroku.com/courses.json");
     	HttpResponse response;
