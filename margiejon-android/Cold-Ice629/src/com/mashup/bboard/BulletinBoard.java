@@ -24,9 +24,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
-public class BulletinBoard extends Activity implements OnItemSelectedListener {
+public class BulletinBoard extends Activity implements OnItemClickListener {
     /** Called when the activity is first created. */
 	ArrayList <String> Classes;
 	static final Integer classIndex = 13;
@@ -39,6 +40,14 @@ public class BulletinBoard extends Activity implements OnItemSelectedListener {
         title = (TextView)findViewById(R.id.tv);
         title.setText("Please Choose a Course");
         listview = (ListView)findViewById(R.id.list);
+        listview.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                int position, long id) {
+              // When clicked, show a toast with the TextView text
+              Toast.makeText(BulletinBoard.this, "Testing",
+                  Toast.LENGTH_SHORT).show();
+            }
+          });
         
         
         HttpClient httpClient = new DefaultHttpClient();
@@ -67,7 +76,6 @@ public class BulletinBoard extends Activity implements OnItemSelectedListener {
         Collections.sort(Classes);
         ArrayAdapter<String> classAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Classes);
         listview.setAdapter(classAdapter);
-        
     }
     
     public static String convertStreamToString(InputStream is) {
@@ -93,15 +101,8 @@ public class BulletinBoard extends Activity implements OnItemSelectedListener {
     }
 
 	@Override
-	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
-			long arg3) {
-		// TODO Auto-generated method stub
-		
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				
 	}
 
-	@Override
-	public void onNothingSelected(AdapterView<?> arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 }
