@@ -1,0 +1,16 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/tblayout"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:stretchColumns="1"
+android:scrollbars="vertical">
+
+<TextView
+	android:id="@+id/tv"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="10dp"
+    android:textSize="16sp">
+</TextView>
+</TableLayout>
+
