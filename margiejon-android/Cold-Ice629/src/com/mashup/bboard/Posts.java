@@ -39,6 +39,7 @@ public class Posts extends Activity {
 	Button resolve;
 	TextView title;
 	ListView listview;
+	String test;
 	HashMap<String, Integer> course_id;
     @Override
     public void onCreate(Bundle savedInstanceState) {
