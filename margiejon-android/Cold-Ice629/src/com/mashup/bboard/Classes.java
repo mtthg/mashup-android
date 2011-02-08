@@ -39,7 +39,7 @@ public class Classes extends Activity implements OnItemClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.classes);
         title = (TextView)findViewById(R.id.tv);
         title.setText("Please Choose a Course");
         listview = (ListView)findViewById(R.id.list);
