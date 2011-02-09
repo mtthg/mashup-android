@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
+<TableLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/questionll"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:scrollbars="vertical">
+<TextView android:id="@+id/title"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:padding="10dp"
+android:textSize="32sp"
+android:typeface="serif"
+/>
+<TextView android:id="@+id/questionview"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:padding="10dp"
+android:textSize="20sp"/>
+<LinearLayout>
+<Button 
+android:orientation="horizontal"
+android:layout_width="0dip"
+android:layout_height="wrap_content"
+android:id="@+id/respond"
+android:text="@string/respond"
+android:layout_weight="1"
+android:layout_alignParentBottom="True" />
+<Button
+android:orientation="horizontal" 
+android:layout_width="0dip"
+android:layout_height="wrap_content"
+android:id="@+id/delete"
+android:text="@string/delete"
+android:layout_weight="1"
+android:layout_alignParentBottom="True" />
 </LinearLayout>
+</TableLayout>

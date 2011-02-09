@@ -17,5 +17,6 @@
          <activity android:name="Classes" />
          <activity android:name="Posts" />
          <activity android:name="Question" />
+         <activity android:name="Response" />
     </application>
 </manifest>

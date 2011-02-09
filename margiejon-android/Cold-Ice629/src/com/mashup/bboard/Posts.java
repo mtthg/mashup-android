@@ -46,7 +46,7 @@ public class Posts extends Activity {
 	static final Integer questionIndex = 13;
 	static final Integer idIndex = 2;
 	Button postNew;
-	Button resolve;
+	//Button resolve;
 	TextView title;
 	TextView noquestions;
 	ListView listview;
@@ -61,8 +61,6 @@ public class Posts extends Activity {
         title.setText("Select a question to view it!");
         postNew = (Button)findViewById(R.id.postbutton);
         postNew.setOnClickListener(postNewQuestion);
-        resolve = (Button)findViewById(R.id.resolvebutton);
-        resolve.setOnClickListener(resolveQuestion);
         TableLayout tblayout = (TableLayout)findViewById(R.id.tblayout);
         listview = (ListView)findViewById(R.id.postlist);
         listview = (ListView)findViewById(R.id.postlist);
@@ -71,6 +69,7 @@ public class Posts extends Activity {
                 int position, long id) {
             	Intent i = new Intent(Posts.this, Question.class);
             	i.putExtra("com.mashup.bboard.questionID", question_id.get(((TextView) view).getText()).intValue());
+            	i.putExtra("com.mashup.bboard.title", ((TextView) view).getText());
             	startActivity(i);
             	Toast.makeText(Posts.this, courseId.toString(),
             			Toast.LENGTH_SHORT).show();
@@ -172,7 +171,7 @@ private View.OnClickListener postNewQuestion = new View.OnClickListener() {
 		*/
 	}
 };
-
+/*
 private View.OnClickListener resolveQuestion = new View.OnClickListener() {
 	
 	@Override
@@ -201,7 +200,7 @@ private View.OnClickListener resolveQuestion = new View.OnClickListener() {
     		Log.e("Networking", "Exception in updateStatus()", t);
     		goBlooey(t);
     	}
-		*/
 	}
 };
+*/
 }

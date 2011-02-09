@@ -19,13 +19,7 @@ android:scrollbars="vertical">
 <Button android:layout_width="0dip"
 android:layout_height="wrap_content"
 android:id="@+id/postbutton"
-android:text="@string/post"
-android:layout_weight="1"
-android:layout_alignParentBottom="True" />
-<Button android:layout_width="0dip"
-android:layout_height="wrap_content"
-android:id="@+id/resolvebutton"
-android:text="@string/resolve"
+android:text="@string/create"
 android:layout_weight="1"
 android:layout_alignParentBottom="True" />
 </LinearLayout>

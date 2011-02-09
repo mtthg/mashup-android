@@ -17,41 +17,30 @@ import java.io.InputStreamReader;
 //import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 //import android.util.Log;
 
 public class Question extends Activity{
-	Integer questionId;
+	private Integer questionId;
+	private TextView title;
+	private TextView question;
+	private Button respond;
+	private Button remove;
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question);
         questionId = getIntent().getIntExtra("com.mashup.bboard.classID", 0);
-        //TODO:Finish Question Processing and UI
-        //HttpClient httpClient = new DefaultHttpClient();
-		//HttpGet getMethod = new HttpGet("http://cold-ice-629.heroku.com/questions/" + questionId.toString() + ".json");
-    	//HttpResponse response;
-		//HttpEntity entity;
-        /*
-        try {
-			response = httpClient.execute(getMethod);
-			entity = response.getEntity();
-			String contentString = convertStreamToString(entity.getContent());
-			JSONArray jarray = new JSONArray(contentString);
-			for (int i = 0; i < jarray.length(); i++) {
-				JSONObject jobject = jarray.getJSONObject(i);
-				String questionInfo = jobject.getString("question").toString();
-				questions = questionInfo.split("\"");
-				String question = questions[questionIndex];
-				String str_id = questions[idIndex];
-				str_id.replaceAll(":", "");
-				str_id = str_id.replaceAll(",", "");
-				Integer id = Integer.parseInt(str_id);
-				question_id.put(question, id);
-				Questions.add(question); 
-			}
-		} catch (Throwable t) {
-    		Log.e("Networking", "Exception in getStatus()", t);
-		} */
+        title = (TextView)findViewById(R.id.title);
+        title.setText(getIntent().getStringExtra("com.mashup.bboard.title"));
+        question = (TextView)findViewById(R.id.questionview);
+        question.setText("Is this a question?");
+        respond = (Button)findViewById(R.id.respond);
+        respond.setOnClickListener(respondClick);
     }
 	 public static String convertStreamToString(InputStream is) {
 
@@ -74,4 +63,14 @@ public class Question extends Activity{
 	        }
 	        return sb.toString();
 	    }
+	 
+	 private View.OnClickListener respondClick = new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(Question.this, Response.class);
+				i.putExtra("com.mashup.bboard.questionId", questionId.intValue());
+				startActivity(i);
+			}
+	 };
 }

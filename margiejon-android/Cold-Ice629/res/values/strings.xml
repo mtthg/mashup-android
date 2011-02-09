@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Bulletin Board</string>
-    <string name="post">Post a new Question!</string>
+    <string name="respond">Respond to Question</string>
     <string name="resolve">Resolve a Question!</string>
     <string name="welcome">Welcome to the SledgeHammer Bulletin Board! A resource for students and teachers. Click the button below to begin.</string>
-   
+    <string name="create">"I have a question!</string>
+    <string name="delete">Remove Question</string>
 </resources>
