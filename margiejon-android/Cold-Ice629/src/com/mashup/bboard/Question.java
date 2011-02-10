@@ -6,18 +6,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 //import java.util.ArrayList;
 //import java.util.HashMap;
@@ -84,7 +90,6 @@ public class Question extends Activity{
 	    }
 	 
 	 private View.OnClickListener respondClick = new View.OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(Question.this, Response.class);
@@ -97,21 +102,57 @@ public class Question extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				try {
-		     		HttpDelete delete = new HttpDelete("http://cold-ice-629.heroku.com/questions/" + questionId.toString());
-		    		client.execute(delete);
-		    		Intent i = new Intent();
-					i.putExtra("com.example.helloandroid.sucess", 1);
-					Question.this.setResult(RESULT_OK, i);
-					Question.this.finish();
-		    	} catch (Throwable t) {
-		    		Log.e("Networking", "Exception in updateStatus()", t);
-		    		Intent i = new Intent();
-					i.putExtra("com.example.helloandroid.sucess", 0);
-					Question.this.setResult(RESULT_CANCELED, i);
-					Question.this.finish();
-		    	}
+				HTTPDelete();
 				
 			}
 	 };
+	 
+public void HTTPDelete() {
+	try {
+ 		HttpDelete delete = new HttpDelete("http://cold-ice-629.heroku.com/questions/" + questionId.toString());
+		client.execute(delete);
+		Intent i = new Intent();
+		i.putExtra("com.example.helloandroid.sucess", 1);
+		Question.this.setResult(RESULT_OK, i);
+		Question.this.finish();
+	} catch (Throwable t) {
+		Log.e("Networking", "Exception in updateStatus()", t);
+		Intent i = new Intent();
+		i.putExtra("com.example.helloandroid.sucess", 0);
+		Question.this.setResult(RESULT_CANCELED, i);
+		Question.this.finish();
+	}
+}
+
+public void getResponses() {
+	HttpClient httpClient = new DefaultHttpClient();
+	HttpGet getMethod = new HttpGet("http://cold-ice-629.heroku.com/questions/by_course_id/" + courseId.toString() + ".json");
+  	HttpResponse response;
+	HttpEntity entity;
+		
+		try {
+			question_id = new HashMap<String, Integer>();
+			Questions = new ArrayList<String>();
+			String questions[];
+			response = httpClient.execute(getMethod);
+			entity = response.getEntity();
+			String contentString = convertStreamToString(entity.getContent());
+			JSONArray jarray = new JSONArray(contentString);
+			for (int i = 0; i < jarray.length(); i++) {
+				JSONObject jobject = jarray.getJSONObject(i);
+				String questionInfo = jobject.getString("question").toString();
+				questions = questionInfo.split("\"");
+				String question = questions[questionIndex];
+				question = question.replace(".", "");
+				String str_id = questions[idIndex].replaceAll(":", "");
+				str_id = str_id.replaceAll(",", "");
+				Integer id = Integer.parseInt(str_id);
+				question_id.put(question, id);
+				Questions.add(question); 
+			}
+		} catch (Throwable t) {
+  		Log.e("Networking", "Exception in getStatus()", t);
+		}
+	responses/by_question_id/<qid>
+}
 }
