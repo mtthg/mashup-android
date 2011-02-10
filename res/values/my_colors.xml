@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="Cyan">#00FFFF</color> 
+    <color name="darkBlue">#ff000000</color>
+    <color name="black">#00000000</color>
+    <!-- I also know that the blues here aren't those colors... I'll change that when I fix this thing. -->
+</resources>

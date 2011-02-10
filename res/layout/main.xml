@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bbgsun" android:gravity="center">
+   
+	<Button android:id="@+id/getSentence" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="Continue a Story" />
+		
+	<TextView android:layout_height="wrap_content"
+		android:text="Story Title"
+		android:textColor="#000000"
+		android:id="@+id/showStoryTitle" 
+		android:layout_width="fill_parent"
+		android:layout_gravity="center_vertical|center_horizontal" android:textStyle="bold"/>
+		
+		<TextView android:layout_height="wrap_content"
+		android:text="..."
+		android:textColor="#000000"
+		android:id="@+id/showellipses" 
+		android:layout_width="fill_parent"
+		android:layout_gravity="center_vertical|center_horizontal"/>
+		
+	<TextView android:id="@+id/showSentence" 
+		android:layout_width="fill_parent"
+		android:textColor="#000000"
+		android:layout_height="wrap_content"
+		android:text="Last Line" />
+		
+	<TextView android:id="@+id/bufferline" 
+		android:layout_width="fill_parent"
+		android:textColor="#000000"
+		android:layout_height="wrap_content"
+		android:text="" />
+
+	<EditText android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:gravity="center_vertical"
+		android:text="Continue the story here."
+		android:maxLines="5" android:id="@+id/addSentence"
+		android:layout_gravity="center"/>
+
+	<Button android:id="@+id/submitSentence" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="Add your sentence" />
+
+</LinearLayout>
