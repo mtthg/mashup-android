@@ -70,7 +70,7 @@ public class Posts extends Activity {
             public void onItemClick(AdapterView<?> parent, View view,
                 int position, long id) {
             	Intent i = new Intent(Posts.this, Question.class);
-            	i.putExtra("com.mashup.bboard.questionID", question_id.get(((TextView) view).getText()).intValue());
+            	i.putExtra("com.mashup.bboard.questionID", question_id.get(((TextView) view).getText()));
             	i.putExtra("com.mashup.bboard.title", ((TextView) view).getText());
             	startActivityForResult(i, 0);
             }

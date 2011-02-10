@@ -50,7 +50,7 @@ public class Question extends Activity{
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.question);
-        questionId = getIntent().getIntExtra("com.mashup.bboard.classID", 0);
+        questionId = getIntent().getIntExtra("com.mashup.bboard.questionID", 0);
         title = (TextView)findViewById(R.id.title);
         title.setText(getIntent().getStringExtra("com.mashup.bboard.title"));
         question = (TextView)findViewById(R.id.questionview);
