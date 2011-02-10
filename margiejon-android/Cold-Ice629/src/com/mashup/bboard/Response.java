@@ -3,6 +3,7 @@ package com.mashup.bboard;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
@@ -19,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class Response extends Activity{
 	private Integer questionId;
@@ -29,7 +31,7 @@ public class Response extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.response);
 		submit = (Button)findViewById(R.id.submit);
-		response = (EditText)findViewById(R.id.respond);
+		response = (EditText)findViewById(R.id.response);
 		submit.setOnClickListener(submitClick);
 		questionId = getIntent().getIntExtra("com.mashup.bboard.questionId", -1);
         client = new DefaultHttpClient();
@@ -41,21 +43,23 @@ public class Response extends Activity{
 		public void onClick(View v) {
 			
 			try {
-	     		HttpPost post = new HttpPost("https://cold-ice-629.heroku.com/questions/mobile/responses.json");
-	    		//Question, title, course_id
-	    		//POST WITH COURSEID
+	     		HttpPost post = new HttpPost("http://cold-ice-629.heroku.com/responses.json");
 	     		String toPost = response.getText().toString();
 	     		String strQId = questionId.toString();
 	    		
 	    		List<NameValuePair> form = new ArrayList<NameValuePair>(2);
-	    		form.add(new BasicNameValuePair("content", toPost));
-	    		form.add(new BasicNameValuePair("id", strQId));
+	    		form.add(new BasicNameValuePair("body", toPost));
+	    		form.add(new BasicNameValuePair("question_id", strQId));
 	    		post.setEntity(new UrlEncodedFormEntity(form, HTTP.UTF_8));
-	    		
-	    		ResponseHandler<String> responseHandler = new BasicResponseHandler();
-	    		client.execute(post, responseHandler); 
+	    		post.getEntity().toString();
+	    		//ResponseHandler<String> responseHandler = new BasicResponseHandler();
+	    		HttpResponse httpResponse = client.execute(post);
+	    		Toast.makeText(Response.this,post.getEntity().toString(), Toast.LENGTH_LONG).show();
+	    		finish();
 	    	} catch (Throwable t) {
 	    		Log.e("Networking", "Exception in updateStatus()", t);
+	    		Toast.makeText(Response.this, "Didn't Work", Toast.LENGTH_LONG).show();
+	    		finish();
 	    	}
 	}
 };

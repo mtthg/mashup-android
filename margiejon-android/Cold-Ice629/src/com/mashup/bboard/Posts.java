@@ -37,7 +37,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class Posts extends Activity {
@@ -51,70 +50,77 @@ public class Posts extends Activity {
 	TextView noquestions;
 	ListView listview;
 	String test;
+	Integer courseId;
+	TableLayout tblayout;
 	HashMap<String, Integer> question_id;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.posts);
-        final Integer courseId = getIntent().getIntExtra("com.mashup.bboard.classID", 0);
+        setContentView(R.layout.posts);   
+        courseId = getIntent().getIntExtra("com.mashup.bboard.classID", 0);
         title = (TextView)findViewById(R.id.posttv);
         title.setText("Select a question to view it!");
         postNew = (Button)findViewById(R.id.postbutton);
         postNew.setOnClickListener(postNewQuestion);
-        TableLayout tblayout = (TableLayout)findViewById(R.id.tblayout);
+        tblayout = (TableLayout)findViewById(R.id.tblayout);
         listview = (ListView)findViewById(R.id.postlist);
         listview = (ListView)findViewById(R.id.postlist);
+        updateHTML();
         listview.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                 int position, long id) {
             	Intent i = new Intent(Posts.this, Question.class);
             	i.putExtra("com.mashup.bboard.questionID", question_id.get(((TextView) view).getText()).intValue());
             	i.putExtra("com.mashup.bboard.title", ((TextView) view).getText());
-            	startActivity(i);
-            	Toast.makeText(Posts.this, courseId.toString(),
-            			Toast.LENGTH_SHORT).show();
+            	startActivityForResult(i, 0);
             }
           });
-        HttpClient httpClient = new DefaultHttpClient();
-		HttpGet getMethod = new HttpGet("http://cold-ice-629.heroku.com/questions/by_course_id/" + courseId.toString() + ".json");
-    	HttpResponse response;
-		HttpEntity entity;
-		
-		try {
-			question_id = new HashMap<String, Integer>();
-			Questions = new ArrayList<String>();
-			String questions[];
-			response = httpClient.execute(getMethod);
-			entity = response.getEntity();
-			String contentString = convertStreamToString(entity.getContent());
-			JSONArray jarray = new JSONArray(contentString);
-			for (int i = 0; i < jarray.length(); i++) {
-				JSONObject jobject = jarray.getJSONObject(i);
-				String questionInfo = jobject.getString("question").toString();
-				questions = questionInfo.split("\"");
-				String question = questions[questionIndex];
-				question = question.replace(".", "");
-				String str_id = questions[idIndex].replaceAll(":", "");
-				str_id = str_id.replaceAll(",", "");
-				Integer id = Integer.parseInt(str_id);
-				question_id.put(question, id);
-				Questions.add(question); 
-			}
-		} catch (Throwable t) {
-    		Log.e("Networking", "Exception in getStatus()", t);
-		}
-    	
-        if (Questions.size() == 0){
-        	TextView noquestions = new TextView(Posts.this);
-        	noquestions.setText("There are currently no questions for this Class. Click the button above to create one.");
-        	noquestions.setTextColor(Color.GREEN);
-        	noquestions.setTextSize(18);
-        	tblayout.addView(noquestions);        	
-        }
-        Collections.sort(Questions);
-        ArrayAdapter<String> classAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Questions);
-        listview.setAdapter(classAdapter); 
+      }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	updateHTML();
     }
+    public void updateHTML(){
+    	HttpClient httpClient = new DefaultHttpClient();
+  		HttpGet getMethod = new HttpGet("http://cold-ice-629.heroku.com/questions/by_course_id/" + courseId.toString() + ".json");
+      	HttpResponse response;
+  		HttpEntity entity;
+  		
+  		try {
+  			question_id = new HashMap<String, Integer>();
+  			Questions = new ArrayList<String>();
+  			String questions[];
+  			response = httpClient.execute(getMethod);
+  			entity = response.getEntity();
+  			String contentString = convertStreamToString(entity.getContent());
+  			JSONArray jarray = new JSONArray(contentString);
+  			for (int i = 0; i < jarray.length(); i++) {
+  				JSONObject jobject = jarray.getJSONObject(i);
+  				String questionInfo = jobject.getString("question").toString();
+  				questions = questionInfo.split("\"");
+  				String question = questions[questionIndex];
+  				question = question.replace(".", "");
+  				String str_id = questions[idIndex].replaceAll(":", "");
+  				str_id = str_id.replaceAll(",", "");
+  				Integer id = Integer.parseInt(str_id);
+  				question_id.put(question, id);
+  				Questions.add(question); 
+  			}
+  		} catch (Throwable t) {
+      		Log.e("Networking", "Exception in getStatus()", t);
+  		}
+      	
+          if (Questions.size() == 0){
+          	TextView noquestions = new TextView(Posts.this);
+          	noquestions.setText("There are currently no questions for this Class. Click the button above to create one.");
+          	noquestions.setTextColor(Color.GREEN);
+          	noquestions.setTextSize(18);
+          	tblayout.addView(noquestions);        	
+          }
+          Collections.sort(Questions);
+          ArrayAdapter<String> classAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Questions);
+          listview.setAdapter(classAdapter); 
+      
+    	 }
 
     public static String convertStreamToString(InputStream is) {
 

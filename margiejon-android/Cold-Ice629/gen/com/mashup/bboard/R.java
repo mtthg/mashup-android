@@ -24,10 +24,10 @@ public final class R {
         public static final int postbutton=0x7f050009;
         public static final int postlist=0x7f050008;
         public static final int posttv=0x7f050007;
-        public static final int question=0x7f05000f;
         public static final int questionll=0x7f05000a;
         public static final int questionview=0x7f05000c;
         public static final int respond=0x7f05000d;
+        public static final int response=0x7f05000f;
         public static final int submit=0x7f050010;
         public static final int tblayout=0x7f050000;
         public static final int title=0x7f05000b;

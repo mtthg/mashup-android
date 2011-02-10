@@ -43,17 +43,21 @@ public class Classes extends Activity implements OnItemClickListener {
         title = (TextView)findViewById(R.id.tv);
         title.setText("Please Choose a Course");
         listview = (ListView)findViewById(R.id.list);
+        updateHTML();
         listview.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                 int position, long id) {
             	Intent i = new Intent(Classes.this, Posts.class);
             	i.putExtra("com.mashup.bboard.classID", course_id.get(((TextView) view).getText()).intValue());
-            	startActivity(i);
+            	startActivityForResult(i, 0);
             	//Toast.makeText(Classes.this, course_id.get(((TextView) view).getText()).toString(),
             		//	Toast.LENGTH_SHORT).show();
             }
           });
         
+
+    }
+    private void updateHTML() {
         HttpClient httpClient = new DefaultHttpClient();
 		HttpGet getMethod = new HttpGet("http://cold-ice-629.heroku.com/courses.json");
     	HttpResponse response;
@@ -86,6 +90,10 @@ public class Classes extends Activity implements OnItemClickListener {
         Collections.sort(Classes);
         ArrayAdapter<String> classAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Classes);
         listview.setAdapter(classAdapter);
+    }
+    
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	updateHTML();
     }
     
     public static String convertStreamToString(InputStream is) {
